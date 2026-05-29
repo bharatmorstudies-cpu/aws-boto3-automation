@@ -69,3 +69,14 @@ Below is the verification screenshot confirming the successful initialization of
 ## 💻 Step 4: Write the Boto3 Python Code
 
 The Lambda function logic is implemented using Python and Boto3 inside `assignment-1/lambda_function.py`. The script uses target resource filters to inspect the cloud environment, identify instances based on their `Action` tags, and adjust their running state safely.
+---
+
+## 🧪 Step 5: Testing & Execution Results
+
+The Lambda function was manually triggered using a default mock test event configuration. The function executed successfully within the adjusted timeout constraints.
+
+### 📸 Execution Result Screenshot
+Below is the verification screenshot displaying the successful status response from the AWS Lambda testing panel.
+
+![Lambda Test Success](./screenshots/lambda_execution_success.png)
+![EC2_Instancesttaus_Post_Lambda Test Success](./screenshots/EC2_Status_Post_lambda_execution_success.png)
