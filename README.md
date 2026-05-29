@@ -64,3 +64,8 @@ Below is the verification screenshot showing the `LambdaEC2ManagementRole` succe
 Below is the verification screenshot confirming the successful initialization of the `EC2-Auto-Manager` function within the AWS console environment.
 
 ![Lambda Function Configuration](./screenshots/lambda_setup.png)
+---
+
+## 💻 Step 4: Write the Boto3 Python Code
+
+The Lambda function logic is implemented using Python and Boto3 inside `assignment-1/lambda_function.py`. The script uses target resource filters to inspect the cloud environment, identify instances based on their `Action` tags, and adjust their running state safely.
