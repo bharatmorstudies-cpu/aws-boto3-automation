@@ -3,11 +3,12 @@ from datetime import datetime, timezone, timedelta
 
 def lambda_handler(event, context):
     s3 = boto3.client('s3')
-    BUCKET_NAME = 'cleanup-test-bench-nagin'  # Replace with your bucket name
+    BUCKET_NAME = 'cleanup-test-bench-nagin'
     
-    # Calculate cutoff time (30 days ago)
-    # NOTE: For quick testing, change days=30 to minutes=1 to target new files
-    cutoff_time = datetime.now(timezone.utc) + timedelta(days=30)
+    # FIX: Subtract 30 days to calculate the correct historical cutoff time
+    cutoff_time = datetime.now(timezone.utc) - timedelta(days=30)
+    
+    print(f"Starting cleanup scan for bucket: '{BUCKET_NAME}' (Targeting files older than: {cutoff_time})")
     
     try:
         response = s3.list_objects_v2(Bucket=BUCKET_NAME)
@@ -20,6 +21,7 @@ def lambda_handler(event, context):
         for obj in response['Contents']:
             last_modified = obj['LastModified']
             
+            # This evaluates if the file is older than the 30-day cutoff
             if last_modified < cutoff_time:
                 file_key = obj['Key']
                 s3.delete_object(Bucket=BUCKET_NAME, Key=file_key)
@@ -36,6 +38,3 @@ def lambda_handler(event, context):
         raise e
         
     return {"deleted_objects": deleted_files}
-# Add this at the very bottom of your file for PowerShell execution
-if __name__ == "__main__":
-    lambda_handler({}, None)
