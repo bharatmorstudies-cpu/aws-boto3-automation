@@ -5,7 +5,7 @@ This repository contains Python Boto3 scripts deployed on AWS Lambda to automate
 ## 📂 Repository Structure
 
 *   **`assignment-1/`**: Lambda function to automatically stop/start EC2 instances based on tags.
-*   **`assignment-2/`**: Lambda function to automatically clean up old files in an S3 bucket.
+*   **`assignment-2/`**: Contains `s3_cleanup_lambda.py` to automatically clean up old files in an S3 bucket.
 *   **`screenshots/`**: Visual verification of AWS environment setup and execution.
 
 ---
@@ -144,33 +144,31 @@ The Lambda function was manually triggered using a default mock test event confi
 
 # 🪣 Assignment 2: Automated S3 Bucket Cleanup
 
-This section documents an automated serverless script running on AWS Lambda using Boto3 to automatically sweep an S3 bucket and permanently delete object files older than 30 days.
+This section documents an automated serverless script running on AWS Lambda using Boto3 to automatically sweep an S3 bucket and permanently delete object files using a custom retention lifecycle policy.
 
 ## 🛠️ Assignment 2 - Step 1: S3 Bucket Setup
-
-A dedicated object storage bucket is provisioned within the AWS Console to act as the targets pool:
-1.  **Bucket Architecture**: Created a globally unique S3 storage bucket.
-2.  **Object Seeding**: Seeded with multiple testing assets, separating baseline workloads into active items and stale items older than 30 days.
-
----
+A dedicated object storage bucket is provisioned within the AWS Console:
+1.  **Bucket Architecture**: Created a globally unique S3 storage bucket named `cleanup-test-bench-nagin`.
+2.  **Object Seeding**: Uploaded multiple testing files with timestamps visible.
 
 ## 🔐 Assignment 2 - Step 2: Lambda IAM Role Configuration
-
 An execution role is built to grant secure access permissions explicitly scoped to object storage lifecycles:
 1.  **Trusted Entity**: AWS Service (`Lambda`)
 2.  **Permissions Policy**: `AmazonS3FullAccess`
-3.  **Role Name**: `LambdaS3ManagementRole`
-
----
+3.  **Role Name**: `LambdaS3CleanupRole`
 
 ## 🚀 Assignment 2 - Step 3: Create the AWS Lambda Function
+A secondary Lambda function is deployed to monitor object states and execute pruning operations:
+1.  **Function Name**: `S3-Old-File-Cleanup`
+2.  **Runtime Workspace**: `Python 3.12`
+3.  **Execution Role**: Configured using `LambdaS3CleanupRole`.
 
-A second Lambda function is deployed to monitor object states and execute pruning operations:
-1.  **Function Name**: `S3-Bucket-Cleanup`
-2.  **Runtime Workspace**: `Python 3.14`
-3.  **Execution Logic**: Evaluates file metadata returned via `list_objects_v2` against a calculated 30-day cutoff timeline, triggering permanent deletions on matching stale profiles.
+## 💻 Assignment 2 - Step 4: Write and Deploy the Code
+The source code is saved inside `assignment-2/s3_cleanup_lambda.py`. The script evaluates files using a `TESTING_MODE` toggle to immediately process elements and clean up resources.
 
----
+## 🧪 Assignment 2 - Step 5: Manual Invocation & Verification
+The function was manually triggered using an `S3Test` mock event profile. The runtime cleared out all testing elements successfully.
+
 
 ## 📸 Deployment Screenshots Portfolio
 
