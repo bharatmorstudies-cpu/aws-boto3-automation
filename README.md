@@ -38,13 +38,13 @@ To allow the Lambda function to interact with your EC2 instances, an IAM Executi
 
 ---
 
-## 🚀 Step 3: Create the Lambda Function
+## 🚀 Step 3: Create the AWS Lambda Function
 
-A Lambda function is created to execute the Python Boto3 script:
+A Lambda function is configured to execute the Python Boto3 automation script:
 
-1.  **Function Name**: `EC2-Tag-Manager`
-2.  **Runtime**: `Python 3.x`
-3.  **Execution Role**: Use the existing `LambdaEC2ManagementRole` created in Step 2.
+1.  **Function Name**: `EC2-Auto-Manager`
+2.  **Runtime**: `Python 3.14`
+3.  **Execution Role**: `LambdaEC2ManagementRole` (Selected via Custom execution role settings)
 
 ---
 
@@ -60,7 +60,7 @@ Below is the verification screenshot showing the `LambdaEC2ManagementRole` succe
 
 ![IAM Role Setup Verification](./screenshots/iam_role_setup.png)
 
-### Lambda Function Setup
-Below is the verification screenshot showing the `EC2-Tag-Manager` Lambda function dashboard.
+### Lambda Function Creation List
+Below is the verification screenshot confirming the successful initialization of the `EC2-Auto-Manager` function within the AWS console environment.
 
-![Lambda Function Verification](./screenshots/lambda_setup.png)
+![Lambda Function Configuration](./screenshots/lambda_setup.png)
